@@ -1,6 +1,6 @@
 ---
 title: "Assignment 1: Introduction"
-author: "Student Name"
+author: "Shana Shapiro"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -16,27 +16,27 @@ This exercise accompanies the introductory material in Environmental Data Analyt
 6. When you have completed the assignment, **Knit** the text and code into a single PDF file.
 8. After Knitting, submit the completed exercise (PDF file) to the dropbox in Sakai. Add your last name into the file name (e.g., "Lima_A01_Introduction.Rmd") prior to submission.
 
-The completed exercise is due on <>.
+The completed exercise is due on <January 16, 2022>.
 
 ## 1) Discussion Questions
 
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: 
+> Answer: My undergraduate studies were in biology and environmental studies, and data analysis was a large component of my coursework and capstone projects. Throughout my time at the Nicholas School I had  a course involving data analytics in three semesters and R in two. As for Git, I first gained familiarity with it in Geospatial Data Analytics last semester. 
 
 2. Are there any components of the course about which you feel confident?
 
-> Answer: 
+> Answer: I feel somewhat confident about the technical coding components. While I feel like I have a relatively decent amount of coding experience, I hope to strengthen my ability to apply those analytical skills.
 
 3. Are there any components of the course about which you feel apprehensive?
 
-> Answer: 
+> Answer: I am somewhat apprehensive of time series analyses as I have no prior knowledge of them. Also, while the courseload is unavoidable, I am apprehensive about doing well on my homework assignments as the work on my Masters Project intensifies. 
 
 
 ## 2) GitHub
 
 Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository  and that you have updated your course README file. 
 
-> Answer: 
+> Answer: https://github.com/shanashapiro/Environmental_Data_Analytics_2022
 
 
