@@ -82,8 +82,9 @@ pass_func <- function(scores){
   ifelse(scores>50, print("TRUE") , print("FALSE")) #exp, if TRUE, if FALSE
 }
 
+pass_func(scores)
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
-> Answer: 
+> Answer: 'ifelse' worked. 'ifelse' was the best option because it can check the codition for every element of the 'scores' vector. 'if' and 'else' can only check the condition for a single element of the vector. 
