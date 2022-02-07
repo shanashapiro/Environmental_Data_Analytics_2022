@@ -1,6 +1,6 @@
 ---
 title: "Assignment 4: Data Wrangling"
-author: "Student Name"
+author: "Shana Shapiro Section #1"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -25,8 +25,29 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 ```{r, message = FALSE}
 #1
+getwd()
+library("tidyverse","lubridate","tidyr")
+o3_18 <- read.csv("../Data/Raw/EPAair_O3_NC2018_raw.csv", stringsAsFactors=TRUE)
+o3_19 <- read.csv("../Data/Raw/EPAair_O3_NC2019_raw.csv", stringsAsFactors = TRUE)
+pm25_18 <- read.csv("../Data/Raw/EPAair_PM25_NC2018_raw.csv", stringsAsFactors = TRUE)
+pm25_19 <- read.csv("../Data/Raw/EPAair_PM25_NC2019_raw.csv", stringsAsFactors = TRUE)
 
 #2
+dim(o3_18)
+colnames(o3_18)
+str(o3_18)
+
+dim(o3_19)
+colnames(o3_19)
+str(o3_19)
+
+dim(pm25_18)
+colnames(pm25_18)
+str(pm25_18)
+
+dim(pm25_19)
+colnames(pm25_19)
+str(pm25_19)
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -37,13 +58,30 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 ```{r}
 #3
+o3_18$Date <- as.Date(o3_18$Date, format = "%m/%d/%Y")
+o3_19$Date <- as.Date(o3_19$Date, format = "%m/%d/%Y")
+pm25_18$Date <- as.Date(pm25_18$Date, format = "%m/%d/%Y")
+pm25_19$Date <- as.Date(pm25_19$Date, format = "%m/%d/%Y")
 
 #4
+o3_18_select <- select(o3_18,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+o3_19_select <- select(o3_19,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+pm25_18_select <- select(pm25_18,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+pm25_19_select <- select(pm25_19,Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
 #5
+pm25_18_select <-mutate(pm25_18_select,AQS_PARAMETER_DESC = "PM2.5")
+pm25_19_select <-mutate(pm25_19_select,AQS_PARAMETER_DESC = "PM2.5")
 
 #6
-
+write.csv(o3_18_select, row.names = FALSE, 
+          file = "../Data/Processed/EPAair_O3_NC2018_processed.csv")
+write.csv(o3_19_select, row.names = FALSE, 
+          file = "../Data/Processed/EPAair_O3_NC2019_processed.csv")
+write.csv(pm25_18_select, row.names = FALSE, 
+          file = "../Data/Processed/EPAair_PM25_NC2018_processed.csv")
+write.csv(pm25_19_select, row.names = FALSE, 
+          file = "../Data/Processed/EPAair_PM25_NC2019_processed.csv")
 ```
 
 
@@ -62,14 +100,28 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 ```{r}
 #7
+EPAair <- rbind(o3_18_select,o3_19_select,pm25_18_select,pm25_19_select)
 
 #8
+EPAair.filter <- 
+  EPAair %>% 
+    filter(Site.Name %in% c("Linville Falls", "Durham Armory", "Leggett", "Hattie Avenue", "Clemmons Middle", "Mendenhall School", "Frying Pan Mountain", "West Johnston Co.", "Garinger High School", "Castle Hayne", "Pitt Agri. Center", "Bryson City", "Millbrook School")) %>%
+  group_by(Date,Site.Name,AQS_PARAMETER_DESC,COUNTY) %>% 
+  summarise(meanAQI = mean(DAILY_AQI_VALUE), 
+            meanLAT = mean(SITE_LATITUDE),
+            meanLON = mean(SITE_LONGITUDE)) %>%
+  mutate(Month = month(Date)) %>% 
+  mutate(Year = year(Date))
 
 #9
+EPAair.tidy <- pivot_wider(EPAair.filter, names_from = AQS_PARAMETER_DESC, values_from = meanAQI)
 
 #10
+dim(EPAair.tidy)
 
 #11
+write.csv(EPAair.tidy, row.names = FALSE, 
+          file = "../Data/Processed/EPAair_O3_PM25_NC2122_Processed.csv")
 
 ```
 
@@ -84,7 +136,11 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 ```{r}
 #12(a,b)
-
+EPAair.summary <-
+  EPAair.tidy %>% 
+  group_by(Site.Name,Month,Year) %>% 
+  summarise(meanAQI = mean(PM2.5))
+  
 
 #13
 
@@ -92,4 +148,4 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
-> Answer: 
+> Answer: N/A 
