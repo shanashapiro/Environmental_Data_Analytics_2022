@@ -3,3 +3,4 @@ lives a little bit easier
 
 1. Make sure the output appears 
 2. Make sure LaTEX is installed 
+3. Answer all of questions

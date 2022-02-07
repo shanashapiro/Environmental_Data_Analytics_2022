@@ -81,6 +81,9 @@ Here are some commonly used aesthetic types that can be manipulated in ggplot:
 ggplot(EPAair, aes(x = Date, y = Ozone)) + 
   geom_point()
 
+#parentheses have argument enclosed. Use '+' when adding layers in ggplot
+#kind of like the pipe %>% operator 
+
 O3plot <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone))
 print(O3plot)
@@ -121,7 +124,8 @@ PMplot.line <-
   geom_line()
 print(PMplot.line)
 
-
+#themes work for future ggplots 
+#if you leave RProject, need to reset theme. Depends on whether you save the workspace 
 ```
 
 
