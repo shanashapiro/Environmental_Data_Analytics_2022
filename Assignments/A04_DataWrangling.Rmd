@@ -26,7 +26,10 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 ```{r, message = FALSE}
 #1
 getwd()
-library("tidyverse","lubridate","tidyr")
+library("tidyverse")
+library("lubridate")
+library("tidyr")
+library("dplyr")
 o3_18 <- read.csv("../Data/Raw/EPAair_O3_NC2018_raw.csv", stringsAsFactors=TRUE)
 o3_19 <- read.csv("../Data/Raw/EPAair_O3_NC2019_raw.csv", stringsAsFactors = TRUE)
 pm25_18 <- read.csv("../Data/Raw/EPAair_PM25_NC2018_raw.csv", stringsAsFactors = TRUE)
@@ -138,12 +141,13 @@ write.csv(EPAair.tidy, row.names = FALSE,
 #12(a,b)
 EPAair.summary <-
   EPAair.tidy %>% 
-  group_by(Site.Name,Month,Year) %>% 
-  summarise(meanAQI = mean(PM2.5))
-  
+  group_by(Site.Name,Month,Year) %>%
+  filter(!is.na(Ozone) & !is.na(PM2.5)) %>% 
+  summarise(meanOzone = mean(Ozone),
+            meanPM2.5 = mean(PM2.5))
 
 #13
-
+dim(EPAair.summary)
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
